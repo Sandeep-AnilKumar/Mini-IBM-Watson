@@ -1,5 +1,12 @@
 package com.NLPProject;
+//test
+/*************Revision History**************************************
+Version 	Author    Date    			ChangesDone
+---------------------------------------------------
+1.0			Sandeep   Apr-10-2016		Initial Version
+1.1			Pavan	  Apr-10-2016       Modified for takig file from command line args
 
+********************************************************************* */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,10 +37,11 @@ public class ParsingQuestions {
 		List<String> questionsList = new ArrayList<String>();
 		InputStream ir = null;
 		BufferedReader br = null;
+		String filePath = args[0];
 
 		try {
 
-			ir  = ParsingQuestions.class.getResourceAsStream("/com/resources/Questions.txt");
+			ir  = ParsingQuestions.class.getResourceAsStream(filePath);
 			br = new BufferedReader(new InputStreamReader(ir));
 
 			String currentQuestion = "";
