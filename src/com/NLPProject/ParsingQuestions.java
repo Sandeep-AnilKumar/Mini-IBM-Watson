@@ -4,8 +4,9 @@ package com.NLPProject;
 Version 	Author    Date    			ChangesDone
 ---------------------------------------------------
 1.0			Sandeep   Apr-10-2016		Initial Version
-1.1			Pavan	  Apr-10-2016       Modified for takig file from command line args
-
+1.1			Pavan	  Apr-10-2016       Modified for taking file from command line args
+1.2         Pavan	  Apr-10-2016		Formatted OP as required by TA. Not writing in file anymore
+										only printing in console
 ********************************************************************* */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
