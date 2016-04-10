@@ -8,7 +8,6 @@ Version 	Author    Date    			ChangesDone
 1.2         Pavan	  Apr-10-2016		Formatted OP as required by TA. Not writing in file anymore
 										only printing in console
 ********************************************************************* */
-//test
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,7 +18,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
@@ -77,8 +75,8 @@ public class ParsingQuestions {
 
 	public static void buildParseTrees(List<String> questions) throws IOException 
 	{
-		//PrintWriter pw = new PrintWriter("ParseTrees.txt");
-		//PrintWriter pw2 = new PrintWriter("QuestionDomains.txt");
+		PrintWriter pw = new PrintWriter("pkotha6_sanilk2_ParseTrees.txt");
+		//PrintWriter pw = new PrintWriter("QuestionDomains.txt");
 		if(questions == null || questions.size() == 0) {
 			System.out.println("No questions to parse");
 		}
@@ -93,34 +91,31 @@ public class ParsingQuestions {
 			
 			for(Tree t : result) {
 				tree= tree + t.toString();
-				//pw.write(t.toString()+"\n");
-				//System.out.print(t.toString()+"\n");
 			}
 			
 			for (String n : ner) {
 				namedEntities = namedEntities + n.toString();
 			}
 			String domain = getDomian(namedEntities, currentQuestion, tree);
-			//pw2.write(currentQuestion);
-			System.out.print("<QUESTION> " + currentQuestion);
+			pw.write("\n<QUESTION> " +currentQuestion);
+			System.out.print("\n<QUESTION> " + currentQuestion);
 			
-			//pw2.write("\n"+domain);
-			System.out.print("\n"+"<CATEGORY> " + domain + "\n");
+			pw.write("\n<CATEGORY> "+domain);
+			System.out.print("\n<CATEGORY> " + domain + "\n");
 			
 			System.out.println("<PARSETREE>");
-			
+			pw.write("\n<PARSETREE>\n");
 			for(Tree t : result) {
 				tree= tree + t.toString();
-				//pw.write(t.toString()+"\n");
+				pw.write(t.toString()+"\n");
 				System.out.print(t.toString()+"\n");
 			}
 			
-			//pw2.write("\n\n");
+			pw.write("\n\n");
 			System.out.print("\n\n");
 		}
 		System.out.println("done");
-		//pw.close();
-		//pw2.close();
+		pw.close();
 	}
 
 	public static String getDomian(String ner, String currentQuestion, String t) throws IOException
