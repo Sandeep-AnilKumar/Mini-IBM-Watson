@@ -41,7 +41,7 @@ public class ParsingQuestions {
 
 		try {
 
-			ir  = ParsingQuestions.class.getResourceAsStream(filePath);
+			ir  = new FileInputStream(filePath);
 			br = new BufferedReader(new InputStreamReader(ir));
 
 			String currentQuestion = "";
@@ -75,8 +75,8 @@ public class ParsingQuestions {
 
 	public static void buildParseTrees(List<String> questions) throws IOException 
 	{
-		PrintWriter pw = new PrintWriter("ParseTrees.txt");
-		PrintWriter pw2 = new PrintWriter("QuestionDomains.txt");
+		//PrintWriter pw = new PrintWriter("ParseTrees.txt");
+		//PrintWriter pw2 = new PrintWriter("QuestionDomains.txt");
 		if(questions == null || questions.size() == 0) {
 			System.out.println("No questions to parse");
 		}
@@ -88,22 +88,37 @@ public class ParsingQuestions {
 			List<String> ner = ner(currentQuestion);
 			String tree = "";
 			String namedEntities = "";
-
+			
 			for(Tree t : result) {
 				tree= tree + t.toString();
-				pw.write(t.toString()+"\n");
+				//pw.write(t.toString()+"\n");
+				//System.out.print(t.toString()+"\n");
 			}
+			
 			for (String n : ner) {
 				namedEntities = namedEntities + n.toString();
 			}
 			String domain = getDomian(namedEntities, currentQuestion, tree);
-			pw2.write(currentQuestion);
-			pw2.write("\n"+domain);
-			pw2.write("\n\n");
+			//pw2.write(currentQuestion);
+			System.out.print("<QUESTION> " + currentQuestion);
+			
+			//pw2.write("\n"+domain);
+			System.out.print("\n"+"<CATEGORY> " + domain + "\n");
+			
+			System.out.println("<PARSETREE>");
+			
+			for(Tree t : result) {
+				tree= tree + t.toString();
+				//pw.write(t.toString()+"\n");
+				System.out.print(t.toString()+"\n");
+			}
+			
+			//pw2.write("\n\n");
+			System.out.print("\n\n");
 		}
 		System.out.println("done");
-		pw.close();
-		pw2.close();
+		//pw.close();
+		//pw2.close();
 	}
 
 	public static String getDomian(String ner, String currentQuestion, String t) throws IOException
