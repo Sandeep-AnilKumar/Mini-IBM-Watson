@@ -24,3 +24,4 @@
 (ROOT (SBARQ (WHADVP (WRB Where)) (SQ (VBD was) (NP (NNP Gaga)) (VP (VBN born))) (. ?)))
 (ROOT (SBARQ (WHPP (IN In) (WHNP (WDT which) (NN album))) (SQ (VBZ does) (NP (NNP Aura)) (VP (VB appear))) (. ?)))
 (ROOT (SBARQ (WHNP (WHNP (WDT Which) (NN album)) (PP (IN by) (NP (NNP Swift)))) (SQ (VBD was) (VP (VBN released) (PP (IN in) (NP (CD 2014))))) (. ?)))
+test
