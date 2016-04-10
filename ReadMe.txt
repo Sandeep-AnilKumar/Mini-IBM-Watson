@@ -1,8 +1,8 @@
-1) Pleasee download pkotha6_sanilk2.jar
-2) Please keep this jar in the same folder, which contains your Stanford folder that contains your tools folder
-exanple : if your folder structure is ./folder1/folder2/Stanford/tools/
+1) Please download pkotha6_sanilk2.jar
+2) Please keep this jar in the same folder, which contains your stanford folder that contains your tools folder
+exanple : if your folder structure is ./folder1/folder2/stanford/tools/
 then please keep pkotha6_sanilk2.jar in folder2 
-3) These four dependency jar need to be present in Stanford/tools location
+3) These four dependency jar need to be present in stanford/tools location
 	slf4j-api.jar 
 	slf4j-simple.jar 
 	stanford-corenlp-3.6.0.jar 
