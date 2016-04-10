@@ -7,7 +7,8 @@ Version 	Author    Date    			ChangesDone
 1.1			Pavan	  Apr-10-2016       Modified for taking file from command line args
 1.2         Pavan	  Apr-10-2016		Formatted OP as required by TA. Not writing in file anymore
 										only printing in console
-********************************************************************* */
+1.3			Sandeep	  Apr-10-2016		Added lemmatization in the code.
+ ********************************************************************* */
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
@@ -88,21 +90,21 @@ public class ParsingQuestions {
 			List<String> ner = ner(currentQuestion);
 			String tree = "";
 			String namedEntities = "";
-			
+
 			for(Tree t : result) {
 				tree= tree + t.toString();
 			}
-			
+
 			for (String n : ner) {
 				namedEntities = namedEntities + n.toString();
 			}
 			String domain = getDomian(namedEntities, currentQuestion, tree);
 			pw.write("\n<QUESTION> " +currentQuestion);
 			System.out.print("\n<QUESTION> " + currentQuestion);
-			
+
 			pw.write("\n<CATEGORY> "+domain);
 			System.out.print("\n<CATEGORY> " + domain + "\n");
-			
+
 			System.out.println("<PARSETREE>");
 			pw.write("\n<PARSETREE>\n");
 			for(Tree t : result) {
@@ -110,11 +112,11 @@ public class ParsingQuestions {
 				pw.write(t.toString()+"\n");
 				System.out.print(t.toString()+"\n");
 			}
-			
+
 			pw.write("\n\n");
 			System.out.print("\n\n");
 		}
-		System.out.println("done");
+		System.out.println("Completed Running the program, Please check the output");
 		pw.close();
 	}
 
@@ -128,23 +130,31 @@ public class ParsingQuestions {
 		prop.load(ir);
 		ir.close();
 		
-		String patternGeo = ".*\\bJJS\\b.*\\bNN\\b.*";
-		String questionParts[] = currentQuestion.split("\\s");
-		int partsLength = questionParts.length;
+		List<String> lemmatizedQuestionList = lemmatize(currentQuestion);
+		String lemmatizedQuestion = "";
 		
+		for (String lq : lemmatizedQuestionList) {
+			lemmatizedQuestion = lemmatizedQuestion + " " +lq.toString();
+		}
+		lemmatizedQuestion = lemmatizedQuestion.trim();
+		
+		String patternGeo = ".*\\bJJS\\b.*\\bNN\\b.*";
+		String questionParts[] = lemmatizedQuestion.split("\\s");
+		int partsLength = questionParts.length;
+
 		Set keywordsSets = prop.keySet();
 		String domain = "";
-		
+
 		for(int i = 0; i < partsLength; i++) {
-				if(! (keywordsSets.contains(questionParts[i]))) {
-					continue;
-				}
-				else {
-					domain = prop.get(questionParts[i]).toString();
-					break;
-				}
+			if(! (keywordsSets.contains(questionParts[i]))) {
+				continue;
 			}
-		
+			else {
+				domain = prop.get(questionParts[i]).toString();
+				break;
+			}
+		}
+
 		if(ner.contains("LOCATION"))
 		{
 			if(ner.contains("PERSON"))
@@ -213,6 +223,28 @@ public class ParsingQuestions {
 			Tree tree = sentence.get(TreeAnnotation.class);
 			result.add(tree);
 		}
+		return result;
+	}
+
+	public static List<String> lemmatize(String text) {
+		Properties props = new Properties();
+		props.setProperty("annotators", "tokenize, ssplit, pos, lemma");
+		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+
+		// create an empty Annotation just with the given text
+		Annotation document = new Annotation(text);
+
+		// run all Annotators on this text
+		pipeline.annotate(document);
+		List<CoreLabel> tokens = document.get(TokensAnnotation.class);
+
+		List<String> result = new ArrayList<String>();
+		for (CoreLabel token : tokens) {
+			// this is the text of the token
+			String lemma = token.get(LemmaAnnotation.class);
+			result.add(lemma);
+		}
+
 		return result;
 	}
 }
