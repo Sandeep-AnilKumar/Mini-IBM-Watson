@@ -136,7 +136,7 @@ public class ParsingQuestions {
 		for (String lq : lemmatizedQuestionList) {
 			lemmatizedQuestion = lemmatizedQuestion + " " +lq.toString();
 		}
-		lemmatizedQuestion = lemmatizedQuestion.trim();
+		lemmatizedQuestion = lemmatizedQuestion.trim().toLowerCase();
 		
 		String patternGeo = ".*\\bJJS\\b.*\\bNN\\b.*";
 		String questionParts[] = lemmatizedQuestion.split("\\s");
