@@ -1,14 +1,5 @@
 package com.NLPProject;
-//test
-/*************Revision History**************************************
-Version 	Author    Date    			ChangesDone
----------------------------------------------------
-1.0			Sandeep   Apr-10-2016		Initial Version
-1.1			Pavan	  Apr-10-2016       Modified for taking file from command line args
-1.2         Pavan	  Apr-10-2016		Formatted OP as required by TA. Not writing in file anymore
-										only printing in console
-1.3			Sandeep	  Apr-10-2016		Added lemmatization in the code.
- ********************************************************************* */
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -34,7 +25,7 @@ import edu.stanford.nlp.trees.TreeCoreAnnotations.TreeAnnotation;
 import edu.stanford.nlp.util.CoreMap;
 public class ParsingQuestions {
 
-	public static void main(String[] args) throws IOException {
+	public static void parsing(String[] args) throws IOException {
 
 		List<String> questionsList = new ArrayList<String>();
 		InputStream ir = null;
@@ -78,7 +69,6 @@ public class ParsingQuestions {
 	public static void buildParseTrees(List<String> questions) throws IOException 
 	{
 		PrintWriter pw = new PrintWriter("pkotha6_sanilk2_ParseTrees.txt");
-		//PrintWriter pw = new PrintWriter("QuestionDomains.txt");
 		if(questions == null || questions.size() == 0) {
 			System.out.println("No questions to parse");
 		}
@@ -129,15 +119,15 @@ public class ParsingQuestions {
 		Properties prop = new Properties();
 		prop.load(ir);
 		ir.close();
-		
+
 		List<String> lemmatizedQuestionList = lemmatize(currentQuestion);
 		String lemmatizedQuestion = "";
-		
+
 		for (String lq : lemmatizedQuestionList) {
 			lemmatizedQuestion = lemmatizedQuestion + " " +lq.toString();
 		}
-		lemmatizedQuestion = lemmatizedQuestion.trim().toLowerCase();
-		
+		lemmatizedQuestion = lemmatizedQuestion.trim();
+
 		String patternGeo = ".*\\bJJS\\b.*\\bNN\\b.*";
 		String questionParts[] = lemmatizedQuestion.split("\\s");
 		int partsLength = questionParts.length;
